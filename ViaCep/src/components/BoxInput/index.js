@@ -8,7 +8,7 @@ export const BoxInput = ({
     textLabel, 
     placeholder, 
     fieldValue = null, 
-    onchangeText= null, 
+    onChangeText= null, 
     KeyType = "default", 
     maxLength}) => {
     return(
@@ -26,7 +26,7 @@ export const BoxInput = ({
                 KeyType={KeyType}
                 maxLenght={maxLength}
                 fieldValue={fieldValue}
-                onchangeText={onchangeText}
+                onChangeText={onChangeText}
             />
         </FieldContent>
     )
