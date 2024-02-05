@@ -6,7 +6,7 @@ import axios, { Axios } from "axios";
 export function HomeScreen() {
 
     //hooks - states
-    const [cep, setCep] = useState("51021784826")
+    const [cep, setCep] = useState("09951-340")
     const [logradouro, setLogradouro] = useState("")
     const [bairro, setBairro] = useState("")
     const [cidade, setCidade] = useState("")
@@ -51,7 +51,7 @@ export function HomeScreen() {
             <ContainerForm>
                 <BoxInput
                     textLabel="Informar CEP"
-                    maxLenght={11}
+                    maxLenght={9}
                     placeholder="Cep..."
                     keyboardType="numeric"
                     fieldWidth={100}
