@@ -6,39 +6,41 @@ import axios, { Axios } from "axios";
 export function HomeScreen() {
 
     //hooks - states
-    const [cep, setCep] = useState("09951-340")
+    const [cep, setCep] = useState("09951340")
     const [logradouro, setLogradouro] = useState("")
     const [bairro, setBairro] = useState("")
-    const [cidade, setCidade] = useState("")
+    const [localidade, setLocalidade] = useState("")
     const [estado, setEstado] = useState("")
     const [uf, setUf] = useState("")
     //hooks - effect
     //chamada da API
 
-    useEffect(async () => {
-        try {
-            if (cep != "" && cep.length === 11) {
-                //retorno da aplicação
-               const endereco = await axios.get(`https://viacep.com.br/ws/${cep}/json/`)
-            };
+    useEffect(() => {
+        async function buscarEndereco() {
+            if (cep != "" && cep.length === 8) {
+                try {
+                    const resposta = await axios.get(`https://viacep.com.br/ws/${cep}/json/`);
 
-            if (endereco.error) {
-                alert("Verifique o CEP");
-                return;
+                    if (resposta.data.erro) {
+                        alert("CEP não encontrado.");
+                        return;
+                    }
+
+                    setLogradouro(resposta.data.logradouro);
+                    setBairro(resposta.data.bairro);
+                    setLocalidade(resposta.data.localidade);
+                    setUf(resposta.data.uf);
+                
+                } catch (error) {
+                    console.error(error);
+                    alert("Erro ao buscar o CEP.");
+                }
             }
-
-            setLogradouro(endereco.data.logradouro);
-            setBairro(endereco.data.bairro);
-            setCidade(endereco.data.cidade);
-            setEstado(endereco.data.estado);
-            setUf(endereco.data.uf);
-
-        } catch (error) {
-            console.log("Erro");
-            console.log(error);
         }
-    }, [cep]) //array de dependecia
-                //Na primeira opção, ele roda somente quando recarrega a pagina e passando "cep", ele recarrega ao passar o CEP.
+
+        buscarEndereco();
+    }, [cep]); // Executa o efeito quando o valor de `cep` mudar //array de dependecia
+    //Na primeira opção, ele roda somente quando recarrega a pagina e passando "cep", ele recarrega ao passar o CEP.
 
     return (
         //ScrollForm
@@ -51,7 +53,7 @@ export function HomeScreen() {
             <ContainerForm>
                 <BoxInput
                     textLabel="Informar CEP"
-                    maxLenght={9}
+                    maxLenght={8}
                     placeholder="Cep..."
                     keyboardType="numeric"
                     fieldWidth={100}
@@ -74,7 +76,7 @@ export function HomeScreen() {
                     textLabel="Cidade"
                     placeholder="Cidade..."
                     fieldWidth={100}
-                    fieldValue={cidade}
+                    fieldValue={localidade}
                 />
                 <RowContainer>
                     <BoxInput
@@ -86,7 +88,7 @@ export function HomeScreen() {
                     <BoxInput
                         textLabel="UF"
                         placeholder="UF"
-                        fieldWidth={20}
+                        fieldWidth={25}
                         fieldValue={uf}
                     />
                 </RowContainer>
