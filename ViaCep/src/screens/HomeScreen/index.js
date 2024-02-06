@@ -39,8 +39,8 @@ export function HomeScreen() {
         }
 
         buscarEndereco();
-    }, [cep]); // Executa o efeito quando o valor de `cep` mudar //array de dependecia
-    //Na primeira opção, ele roda somente quando recarrega a pagina e passando "cep", ele recarrega ao passar o CEP.
+    }, [cep]);//array de dependecia
+    //Na primeira opção "[]", ele roda somente quando recarrega a pagina e passando "cep", ele recarrega ao passar o CEP.
 
     return (
         //ScrollForm
